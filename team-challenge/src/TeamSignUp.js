@@ -7,7 +7,7 @@ class SignUpForm extends React.Component {
   constructor(props){
     super(props);
     this.state = { //track values and overall validity of each field
-      email:{value:'',valid:false}, 
+      email:{value:'',valid:false},
       name:{value:'',valid:false},
       dob:{value:'',valid:false},
       password:{value:'',valid:false},
@@ -86,15 +86,14 @@ class EmailInput extends React.Component {
 
     //check email validity
     //pattern comparison from w3c https://www.w3.org/TR/html-markup/input.email.html#input.email.attrs.value.single
-    var valid = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(currentValue)
+    var valid = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(currentValue);
     if(!valid){
       return {invalidEmail:true, isValid:false};
-    }    
-
+    }
     return {isValid: true}; //no errors
-  }  
+  }
 
-  handleChange(event){  
+  handleChange(event){
     //check validity (to inform parent)
     var isValid = this.validate(event.target.value).isValid;
 
@@ -124,7 +123,7 @@ class EmailInput extends React.Component {
         {errors.missing &&
           <p className="help-block error-missing">we need to know your email address</p>
         }
-        {errors.invalid &&
+        {errors.invalidEmail &&
           <p className="help-block error-invalid">this is not a valid email address</p>
         }
       </div>
@@ -191,18 +190,17 @@ class BirthdayInput extends React.Component {
 
     //check date validity
     var timestamp = Date.parse(currentValue); //use built-in Date type
-    if(isNaN(timestamp)) { //it not a valid stamp
+    if(isNaN(timestamp)) { //is not a valid stamp
       return {notDate:true, isValid:false};
     }
 
     //check age range
     var d = new Date(); //today
-    d.setYear(d.getFullYear() - 13); //subtract 13 from the year
+    d.setFullYear(d.getFullYear() - 13); //subtract 13 from the year
     var minTimestamp = d.getTime();
-    if(timestamp < minTimestamp){
+    if(timestamp > minTimestamp){
       return {notOldEnough:true, isValid:false}
     }
-
     return {isValid: true}; //no errors
   }  
   
