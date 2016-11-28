@@ -104,7 +104,6 @@ class EmailInput extends React.Component {
         valid:isValid
       }
     };
-
     this.props.updateParent(stateUpdate) //update parent state
   }
 
@@ -185,7 +184,7 @@ class RequiredInput extends React.Component {
 class BirthdayInput extends React.Component {
   validate(currentValue){
     if(currentValue === ''){ //check presence
-      return {missing:true, isValid:false}
+      return {missing:true, isValid:false};
     }
 
     //check date validity
@@ -199,7 +198,7 @@ class BirthdayInput extends React.Component {
     d.setFullYear(d.getFullYear() - 13); //subtract 13 from the year
     var minTimestamp = d.getTime();
     if(timestamp > minTimestamp){
-      return {notOldEnough:true, isValid:false}
+      return {notOldEnough:true, isValid:false};
     }
     return {isValid: true}; //no errors
   }  
@@ -215,7 +214,6 @@ class BirthdayInput extends React.Component {
         valid:isValid
       }
     };
-
     this.props.updateParent(stateUpdate) //update parent state
   }
 
