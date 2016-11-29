@@ -119,7 +119,7 @@ describe('birthday input', () => {
 });
 
 
-describe('RequiredInput name component', () => {
+describe('RequiredInput name & password component', () => {
   var validationSpy = sinon.spy(RequiredInput.prototype, 'validate');
 
   it('show an error if the name is blank', () => {
@@ -134,16 +134,12 @@ describe('RequiredInput name component', () => {
   it('does not show an error if a name is entered', () => {
     const wrapper = shallow(<RequiredInput value={'Darryl'} />);
 
-    var returnValid = validationSpy.returned({ required: true, isValid: true });
+    var returnValid = validationSpy.returned({ isValid: true });
     expect(returnValid).toEqual(true);
     expect(wrapper.find('p').length).toEqual(0);
   });
-});
 
-describe('RequiredInput password component', () => {
-  var validationSpy = sinon.spy(RequiredInput.prototype, 'validate');
-
-  it('should show an error if the name is blank', () => {
+  it('should show an error if the password is blank', () => {
     const wrapper = shallow(<RequiredInput value={''} />);
 
     var returnMissing = validationSpy.returned({ required: true, isValid: false });
@@ -152,23 +148,24 @@ describe('RequiredInput password component', () => {
     expect(wrapper.find('p').hasClass('help-block error-missing')).toEqual(true);
   });
 
-  it('does not show an error if a password is entered', () => {
+   it('does not show an error if a password is entered', () => {
     const wrapper = shallow(<RequiredInput value={'Password'} />);
 
-    var returnValid = validationSpy.returned({ required: true, isValid: true });
+    var returnValid = validationSpy.returned({ isValid: true });
     expect(returnValid).toEqual(true);
     expect(wrapper.find('p').length).toEqual(0);
-  });
+  }); 
 });
 
 describe('PasswordConfirmationInput component', () => {
   var validationSpy = sinon.spy(PasswordConfirmationInput.prototype, 'validate');
+
   it('sees whether the form is empty', () => {
     const wrapper = shallow(<PasswordConfirmationInput value={''} />);
 
-    var returnMissing = validationSpy.returned({ mismatched: true, isValid: true });
+    var returnMissing = validationSpy.returned({ isValid: true });
     expect(returnMissing).toEqual(true);
-    expect(wrapper.find('p').length).toEqual(0);
+    expect(wrapper.find('p').length).toEqual(1);
   });
 
   it('show an error if the passwords do not match', () => {
@@ -182,7 +179,7 @@ describe('PasswordConfirmationInput component', () => {
   it('does not show an error if passwords match', () => {
     const wrapper = shallow(<PasswordConfirmationInput value={'password'} password={'password'} />)
 
-    var returnMatch = validationSpy.returned({ mismatched: false, isValid: true });
+    var returnMatch = validationSpy.returned({ isValid: true });
     expect(returnMatch).toEqual(true);
     expect(wrapper.find('p').length).toEqual(0);
   });

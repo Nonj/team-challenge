@@ -163,7 +163,7 @@ class RequiredInput extends React.Component {
     stateUpdate[this.props.field] = {
       value:event.target.value,
       valid:isValid
-    }
+    };
 
     this.props.updateParent(stateUpdate) //update parent state
   }
