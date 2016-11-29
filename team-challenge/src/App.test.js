@@ -209,3 +209,56 @@ describe('PasswordConfirmationInput component', () => {
     expect(wrapper.find('p').length).toEqual(0);
   });
 });
+
+
+
+describe('reset button functionality', () => {
+  let wrapper;
+  let handleResetSpy;
+  // create spy
+  beforeAll(() => {
+    handleResetSpy = sinon.spy(TeamSignUp.prototype, 'handleReset');
+  });
+
+  beforeEach(() => {
+    submitCallback = sinon.spy();
+    wrapper = mount(<TeamSignUp submitCallback={submitCallback} />);
+    wrapper.find('EmailInput input').simulate('change', { target: { value: "drew@gmail.com" } });
+    wrapper.find('#name input').simulate('change', { target: { value: "Andrew" } });
+    wrapper.find('BirthdayInput input').simulate('change', { target: { value: "10/20/1995" } });
+    wrapper.find('#password input').simulate('change', { target: { value: "Password123" } });
+    wrapper.find('PasswordConfirmationInput input').simulate('change', { target: { value: "Password123" } });
+  });
+  
+  afterEach(() => {
+    wrapper = undefined;
+    handleResetSpy.reset();
+  });
+
+  it('should set form fields to empty', () => {
+    wrapper.find('#resetButton').simulate('click', {});
+    expect(handleResetSpy.callCount).toEqual(1);
+    expect(wrapper.find('EmailInput input').text()).toEqual('');
+    expect(wrapper.find('#name input').text()).toEqual('');
+    expect(wrapper.find('BirthdayInput input').text()).toEqual('');
+    expect(wrapper.find('#password input').text()).toEqual('');
+    expect(wrapper.find('PasswordConfirmationInput input').text()).toEqual('');
+
+    expect(wrapper.find('.invalid').reduce((sum, cur) => { return sum + 1 }, 0)).toEqual(4);
+  });
+
+  it('should set state to empty', () => {
+    wrapper.find('#resetButton').simulate('click', {});
+    expect(handleResetSpy.callCount).toEqual(1);
+    expect(wrapper.state(['email']).value).toEqual('');
+    expect(wrapper.state(['email']).valid).toBeFalsy();
+    expect(wrapper.state(['name']).value).toEqual('');
+    expect(wrapper.state(['name']).valid).toBeFalsy();
+    expect(wrapper.state(['dob']).value).toEqual('');
+    expect(wrapper.state(['dob']).valid).toBeFalsy();
+    expect(wrapper.state(['password']).value).toEqual('');
+    expect(wrapper.state(['password']).valid).toBeFalsy();
+    expect(wrapper.state(['passwordConf']).value).toEqual('');
+    expect(wrapper.state(['passwordConf']).valid).toBeFalsy();
+  });
+});
