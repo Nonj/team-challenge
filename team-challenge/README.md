@@ -5,26 +5,24 @@ This folder contains code for a validating sign-up form, created as part of the 
 The below questions should be answered regarding your submission!
 
 ##### Which team members were responsible for which features? #####
-> Answer goes here!
+> Andrew finished #1 and #6 along with an additional CSS issue #8, Ryan finished #2 and #4, Darryl finished #3 and #5, and Non was responsible for #7.
 
-
-_Note: If there are any issues with group collaboration, let me know now **before** the final project!_
-
+No problems were noted with our group participation and communication
 
 ##### Did you receive help from any other sources (classmates, etc)? If so, please list who (be specific!). #####
-> Answer goes here!
+> The only help needed was from within the team
 
 
 ##### Approximately how many hours did it take you to complete this assignment? #####
-> Answer goes here!
+> Approximately 6 hours total
 
 
 ##### On a scale of 1 (too easy) to 10 (too challenging), how difficult was this assignment? #####
-> Answer goes here!
+> 7
 
 
 ##### Did you encounter any problems in this assignment we should warn students about in the future? How can we make the assignment better? #####
-> Answer goes here!
+> No huge issues really. Every member ran accross their own complications at points but by resourscing eachother when needed we were able to fully debug.
 
 
 
