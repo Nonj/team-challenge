@@ -65,7 +65,7 @@ class SignUpForm extends React.Component {
 
         {/* Submit Buttons */}
         <div className="form-group">
-          <button id="resetButton" type="reset" className="btn btn-default" onClick={(e)=>this.handleReset(e)}>Reset</button> {' ' /*space*/}
+          <button id="resetButton" type="reset" className="btn btn-default" onClick={(e) => this.handleReset(e)}>Reset</button> {' ' /*space*/}
           <button id="submitButton" type="submit" className="btn btn-primary" disabled={buttonEnabled}>Sign Me Up!</button>
         </div>
 
@@ -79,6 +79,7 @@ class SignUpForm extends React.Component {
  * A component representing a controlled input for an email address
  */
 class EmailInput extends React.Component {
+
   validate(currentValue){
     if(currentValue === ''){ //check presence
       return {missing: true, isValid: false}
@@ -165,7 +166,7 @@ class RequiredInput extends React.Component {
     return (
       <div className={inputStyle}>
         <label htmlFor={this.props.field}>{this.props.label}</label>
-        <input type={this.props.type} id={this.props.id} name={this.props.field}className="form-control" placeholder={this.props.placeholder}
+        <input type={this.props.type} id={this.props.id} name={this.props.field} className="form-control" placeholder={this.props.placeholder}
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />

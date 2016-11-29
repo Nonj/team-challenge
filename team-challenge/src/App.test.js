@@ -12,10 +12,12 @@ it('renders without crashing', () => {
 
 describe('email address input', () => {
   var validateSpy = sinon.spy(EmailInput.prototype, 'validate');
+  var updateSpy = sinon.spy();
 
   it('shows email blank error if email is blank', () => {
     
-    const wrapper = shallow(<EmailInput value=''/>);
+
+    const wrapper = shallow(<EmailInput updateParent={updateSpy} value={''} />);
 
     //check that validate method returned correctly
     var returnedMissing = validateSpy.returned({missing: true, isValid: false});
@@ -28,7 +30,13 @@ describe('email address input', () => {
     expect(wrapper.find('p').hasClass('help-block error-missing')).toEqual(true);
 
     //check that updateParent was called with the correct value
-
+    var expectedReturn = {
+      'email': {
+        value:"ryan",
+        valid:false
+      }
+    }
+    expect(updateSpy.called).toEqual(true);
   });
 
   it('shows email valid error if email is invalid', () => {
@@ -51,7 +59,9 @@ describe('email address input', () => {
 
   it('does not show any errors when given a valid email', () => {
 
-    const wrapper = shallow(<EmailInput value='ryanmagee47@gmail.com'/>);
+    var updateSpy = sinon.spy();
+
+    const wrapper = shallow(<EmailInput value={'ryanmagee47@gmail.com'} updateParent={updateSpy} />);
 
     //check that validate method returned correctly
     var returnedValid = validateSpy.returned({isValid: true});
@@ -61,7 +71,8 @@ describe('email address input', () => {
     expect(wrapper.find('p').length).toEqual(0);
 
     //check that updateParent was called with the correct value
-    
+    expect(updateSpy.called).toEqual(true);
+
   });
 });
 
@@ -70,7 +81,9 @@ describe('birthday input', () => {
 
   it('shows a birthday required message if birthday is left blank', () => {
 
-    const wrapper = shallow(<BirthdayInput value =''/>);
+    var updateSpy = sinon.spy();
+
+    const wrapper = shallow(<BirthdayInput updateParent={updateSpy} value =''/>);
 
     //check that validate method returned correctly
     var returnedMissing = validateSpy.returned({missing:true, isValid:false});
@@ -83,7 +96,7 @@ describe('birthday input', () => {
     expect(wrapper.find('p').hasClass('help-block error-missing')).toEqual(true);
 
     //check that updateParent was called with the correct value
-    
+    expect(updateSpy.called).toEqual(true);
   });
 
   it('shows an error if an invalid date is entered', () => {
