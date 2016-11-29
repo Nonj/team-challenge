@@ -137,3 +137,52 @@ describe('birthday input', () => {
     
   });
 });
+
+
+describe ('RequiredInput name component', () => {
+  var validationSpy = sinon.spy(RequiredInput.prototype, 'validate');
+
+  it('show an error if the name is blank', () => {
+    const wrapper = shallow(<RequiredInput value ={''} />);
+
+    var returnMissing = validationSpy.returned({required:true, isValid:false});
+    expect(returnMissing).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(1);
+    expect(wrapper.find('p').hasClass('help-block error-missing')).toEqual(true);
+  });
+
+  it('does not show an error if a name is entered', () => {
+    const wrapper = shallow(<RequiredInput value ={'Darryl'} />);
+
+    var returnValid = validationSpy.returned({required: true, isValid:true});
+    expect(returnValid).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+});
+
+describe('RequiredInput password component', () => {
+  var validationSpy = sinon.spy(RequiredInput.prototype, 'validate');
+
+  it('show an error if the name is blank', () => {
+    const wrapper = shallow(<RequiredInput value={''} />);
+
+    var returnMissing = validationSpy.returned({required:true, isValid:false});
+    expect(returnMissing).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(1);
+    expect(wrapper.find('p').hasClass('help-block error-missing')).toEqual(true);
+  });
+
+  it('does not show an error if a password is entered', () => {
+    const wrapper = shallow(<RequiredInput value ={'Password'} />);
+
+    var returnValid = validationSpy.returned({required: true, isValid:true});
+    expect(returnValid).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+});
+
+// Still have to finish.
+describe('PasswordConfirmationInput component', () => {
+  var validationSpy = sinon.spy(PasswordConfirmationInput.prototype, 'validate');
+
+})
