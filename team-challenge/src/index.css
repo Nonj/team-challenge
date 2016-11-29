@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.form-control {
+  background-color:#FFCEC3;
+;
+}
+.help-block {
+  color: red;
+}
