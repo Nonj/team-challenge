@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 
 /**
  * The overall form component
@@ -15,6 +16,7 @@ class SignUpForm extends React.Component {
     };
 
     this.updateState = this.updateState.bind(this); //bind for scope
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   //callback for updating the state with child information
@@ -25,8 +27,14 @@ class SignUpForm extends React.Component {
   //callback for the reset button
   handleReset(event) {
     console.log('Reset!');
-    var emptyState = {};
-    this.setState(emptyState);
+      var defaultState = {
+      email:{value:'',valid:false},
+      name:{value:'',valid:false},
+      dob:{value:'',valid:false},
+      password:{value:'',valid:false},
+      passwordConf:{value:'',valid:false}
+    };
+    this.setState(defaultState);
   }
 
   //callback for the submit button
@@ -38,7 +46,8 @@ class SignUpForm extends React.Component {
 
   render() {
     //if all fields are valid, button should be enabled
-    var buttonEnabled = (this.state.email.valid && this.state.name.valid && this.state.dob.isValid && this.state.password.valid);
+    
+    var buttonEnabled = (this.state.email.valid && this.state.name.valid && this.state.dob.valid && this.state.password.valid && !this.state.passwordConf.mismatched && this.state.passwordConf.valid);
 
     return (
       <form name="signupForm" onSubmit={(e) => this.handleSubmit(e)}>
@@ -66,7 +75,7 @@ class SignUpForm extends React.Component {
         {/* Submit Buttons */}
         <div className="form-group">
           <button id="resetButton" type="reset" className="btn btn-default" onClick={(e)=>this.handleReset(e)}>Reset</button> {' ' /*space*/}
-          <button id="submitButton" type="submit" className="btn btn-primary" disabled={buttonEnabled}>Sign Me Up!</button>
+          <button id="submitButton" type="submit" className="btn btn-primary" disabled={!buttonEnabled} >Sign Me Up!</button>
         </div>
 
       </form>
