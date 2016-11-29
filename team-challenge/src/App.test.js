@@ -182,31 +182,54 @@ describe('RequiredInput password component', () => {
   });
 });
 
-// Still have to finish.
 describe('PasswordConfirmationInput component', () => {
   var validationSpy = sinon.spy(PasswordConfirmationInput.prototype, 'validate');
+  it('sees whether the form is empty', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={''} />);
+
+    var returnMissing = validationSpy.returned({ mismatched: true, isValid: true });
+    expect(returnMissing).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+
+  it('show an error if the passwords do not match', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={'password'} password={'wordpass'} />)
+
+    var returnMismatch = validationSpy.returned({ mismatched: true, isValid: true });
+    expect(returnMismatch).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(1);
+    expect(wrapper.find('p').hasClass('help-block error-mismatched')).toEqual(true);
+  });
+  it('does not show an error if passwords match', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={'password'} password={'password'} />)
+
+    var returnMatch = validationSpy.returned({ mismatched: false, isValid: true });
+    expect(returnMatch).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+
 });
 
 describe('Submit button of form', () => {
   it('should be enabled if all of the forms are valid', () => {
-    const wrapper=mount(<TeamSignUp />);
+    const wrapper = mount(<TeamSignUp />);
     // valid email consts
     const email = 'mail@yahoo.com';
     const name = 'Non';
     const dob = '12/12/1900';
     const password = 'password';
-    
+
     // simulate valid inputs
-    wrapper.find('#email').simulate('change', {target:{value: email}});
-    wrapper.find('#name').simulate('change', {target:{value: name}});
-    wrapper.find('#dob').simulate('change', {target:{value: dob}}); 
-    wrapper.find('#password').simulate('change', {target:{value: password}});
-    wrapper.find("#passwordConf").simulate('change', {target:{value: password}});
+    wrapper.find('#email').simulate('change', { target: { value: email } });
+    wrapper.find('#name').simulate('change', { target: { value: name } });
+    wrapper.find('#dob').simulate('change', { target: { value: dob } });
+    wrapper.find('#password').simulate('change', { target: { value: password } });
+    wrapper.find("#passwordConf").simulate('change', { target: { value: password } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(false);
   });
 
   it('should be disabled if any of the forms are invalid', () => {
-    const wrapper=mount(<TeamSignUp />);
+    const wrapper = mount(<TeamSignUp />);
     // valid email consts
     const email = 'Mail@mail.com';
     const name = 'Non';
@@ -214,75 +237,75 @@ describe('Submit button of form', () => {
     const password = 'password';
 
     // check email field
-    wrapper.find('#email').simulate('change', {target:{value:'Email'}});
+    wrapper.find('#email').simulate('change', { target: { value: 'Email' } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(true);
-    wrapper.find('#email').simulate('change', {target:{value: email}}); // change back to be valid
-    
+    wrapper.find('#email').simulate('change', { target: { value: email } }); // change back to be valid
+
     // check name field
-    wrapper.find('#name').simulate('change', {target:{value: ''}});
+    wrapper.find('#name').simulate('change', { target: { value: '' } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(true);
-    wrapper.find('#name').simulate('change', {target:{value: name}}); // change back to be valid
-    
+    wrapper.find('#name').simulate('change', { target: { value: name } }); // change back to be valid
+
     // check date of birth field
-    wrapper.find('#dob').simulate('change', {target:{value: 'Luis'}});
+    wrapper.find('#dob').simulate('change', { target: { value: 'Luis' } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(true);
-    wrapper.find('#dob').simulate('change', {target:{value: dob}}); // change back to be valid
+    wrapper.find('#dob').simulate('change', { target: { value: dob } }); // change back to be valid
 
     // check password field
-    wrapper.find('#password').simulate('change', {target:{value: ''}});
+    wrapper.find('#password').simulate('change', { target: { value: '' } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(true);
-    wrapper.find('#password').simulate('change', {target:{value: password}}); // change back to be valid
-    
+    wrapper.find('#password').simulate('change', { target: { value: password } }); // change back to be valid
+
     // check same password field
-    wrapper.find("#passwordConf").simulate('change', {target:{value: ''}});
+    wrapper.find("#passwordConf").simulate('change', { target: { value: '' } });
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(true);
-    wrapper.find("#passwordConf").simulate('change', {target:{value: password}}); // change back to be valid
+    wrapper.find("#passwordConf").simulate('change', { target: { value: password } }); // change back to be valid
   })
 
   it('should handle submit callback in App', () => {
-    
+
     // set up a sinon spy on the handleSubmit callback of the app
     const handleSubmitSpy = sinon.spy(App.prototype, 'handleSubmit');
-    const wrapper=mount(<App />);
+    const wrapper = mount(<App />);
 
     // valid form consts
     const email = 'mail@yahoo.com';
     const name = 'Non';
     const dob = '12/12/1900';
     const password = 'password';
-    
+
     //simulate valid inputs
-    wrapper.find('#email').simulate('change', {target:{value: email}});
-    wrapper.find('#name').simulate('change', {target:{value: name}});
-    wrapper.find('#dob').simulate('change', {target:{value: dob}}); 
-    wrapper.find('#password').simulate('change', {target:{value: password}});
-    wrapper.find('#passwordConf').simulate('change', {target:{value: password}});
-    
+    wrapper.find('#email').simulate('change', { target: { value: email } });
+    wrapper.find('#name').simulate('change', { target: { value: name } });
+    wrapper.find('#dob').simulate('change', { target: { value: dob } });
+    wrapper.find('#password').simulate('change', { target: { value: password } });
+    wrapper.find('#passwordConf').simulate('change', { target: { value: password } });
+
     wrapper.find('form').simulate('submit');
-    
+
     expect(handleSubmitSpy.called).toEqual(true); // check the sinon spy
     expect(wrapper.find('.alert-success').length).toEqual(1); // check if the alert showed up
-    
+
   });
 
   it('should show the proper alert-success element when submit is clicked', () => {
-    const wrapper=mount(<App />);
-
+    const wrapper = mount(<App />);
     // valid form consts
     const email = 'mail@yahoo.com';
     const name = 'Non';
     const dob = '12/12/1900';
     const password = 'password';
-    
+
     //simulate valid inputs
-    wrapper.find('#email').simulate('change', {target:{value: email}});
-    wrapper.find('#name').simulate('change', {target:{value: name}});
-    wrapper.find('#dob').simulate('change', {target:{value: dob}}); 
-    wrapper.find('#password').simulate('change', {target:{value: password}});
-    wrapper.find('#passwordConf').simulate('change', {target:{value: password}});
-    
+    wrapper.find('#email').simulate('change', { target: { value: email } });
+    wrapper.find('#name').simulate('change', { target: { value: name } });
+    wrapper.find('#dob').simulate('change', { target: { value: dob } });
+    wrapper.find('#password').simulate('change', { target: { value: password } });
+    wrapper.find('#passwordConf').simulate('change', { target: { value: password } });
+
     wrapper.find('form').simulate('submit');
-    
+
     expect(wrapper.find('.alert-success').length).toEqual(1); // check if the alert showed up
   });
+
 });
