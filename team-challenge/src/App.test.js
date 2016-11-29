@@ -62,7 +62,7 @@ describe('birthday input', () => {
 
   it('shows a birthday required message if birthday is left blank', () => {
 
-    const wrapper = shallow(<BirthdayInput value ='' />);
+    const wrapper = shallow(<BirthdayInput value ={''} />);
 
     //check that validate method returned correctly
     var returnedMissing = validateSpy.returned({ missing: true, isValid: false });
@@ -77,7 +77,7 @@ describe('birthday input', () => {
 
   it('shows an error if an invalid date is entered', () => {
 
-    const wrapper = shallow(<BirthdayInput value='hello' />);
+    const wrapper = shallow(<BirthdayInput value={'hello'} />);
 
     ////check that validate method returned correctly
     var returnedInvalid = validateSpy.returned({ notDate: true, isValid: false });
@@ -92,7 +92,7 @@ describe('birthday input', () => {
 
   it('shows an error if the person is not above the age of 13', () => {
 
-    const wrapper = shallow(<BirthdayInput value='11/21/2010' />);
+    const wrapper = shallow(<BirthdayInput value={'11/21/2010'} />);
 
     //check that validate returned correctly
     var returnedUnderage = validateSpy.returned({ notOldEnough: true, isValid: false });
@@ -107,7 +107,7 @@ describe('birthday input', () => {
 
   it('does not show an error if a valid date is entered', () => {
 
-    const wrapper = shallow(<BirthdayInput value='09/18/1995' />);
+    const wrapper = shallow(<BirthdayInput value={'09/18/1995'} />);
 
     //check that validate returned correctly
     var returnedValid = validateSpy.returned({ isValid: true });
