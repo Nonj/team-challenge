@@ -195,8 +195,7 @@ describe('reset button functionality', () => {
   });
 
   beforeEach(() => {
-    submitCallback = sinon.spy();
-    wrapper = mount(<TeamSignUp submitCallback={submitCallback} />);
+    wrapper = mount(<TeamSignUp />);
     wrapper.find('EmailInput input').simulate('change', { target: { value: "drew@gmail.com" } });
     wrapper.find('#name input').simulate('change', { target: { value: "Andrew" } });
     wrapper.find('BirthdayInput input').simulate('change', { target: { value: "10/20/1995" } });
