@@ -181,8 +181,31 @@ describe('RequiredInput password component', () => {
   });
 });
 
-// Still have to finish.
 describe('PasswordConfirmationInput component', () => {
   var validationSpy = sinon.spy(PasswordConfirmationInput.prototype, 'validate');
 
-})
+  it('sees whether the form is empty', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={''} />);
+
+    var returnMissing = validationSpy.returned({mismatched: true, isValid: true});
+    expect(returnMissing).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+
+  it('show an error if the passwords do not match', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={'password'} password={'wordpass'} />)
+
+    var returnMismatch = validationSpy.returned({mismatched: true, isValid: true});
+    expect(returnMismatch).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(1);
+    expect(wrapper.find('p').hasClass('help-block error-mismatched')).toEqual(true);
+  });
+
+  it('does not show an error if passwords match', () => {
+    const wrapper = shallow(<PasswordConfirmationInput value={'password'} password={'password'} />)
+
+    var returnMatch = validationSpy.returned({mismatched: false, isValid: true});
+    expect(returnMatch).toEqual(true);
+    expect(wrapper.find('p').length).toEqual(0);
+  });
+});
